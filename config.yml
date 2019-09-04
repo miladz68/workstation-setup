@@ -84,6 +84,68 @@
   # Install package_name using the first known helper found
   - name: Install packages from aur 
     aur: 
+      skip_installed: yes
       name:
         - visual-studio-code-bin
         - vazir-fonts
+
+  - name: setup yakuake
+    lineinfile:
+      dest: ~/.config/yakuakerc
+      line: "{{ item.line }}"
+    with_items:
+      - { line: '[Window]' }
+      - { line: 'Height=100' }
+      - { line: 'Position=100' }
+      - { line: 'Width=50' }
+  - name: create scripts directory 
+    file: path=~/scripts/ state=directory
+  - name: Copy vs code shortcut script
+    copy: 
+      src: ./shortcut.sh
+      dest: ~/scripts/shortcut.sh
+
+  - name: create vs code shortcut in globalshortcutsrc
+    command: kwriteconfig5 --file ~/.config/kglobalshortcutsrc --group khotkeys --key={5971d014-f454-481a-9a29-22f43dc0cb16} F9,none,Vscode
+
+  - name: create vs code shortcut
+    blockinfile:
+      path: ~/.config/khotkeysrc
+      block: |
+
+        [Data_5]
+        Comment=Lauch vscode
+        Enabled=true
+        Name=Vscode
+        Type=SIMPLE_ACTION_DATA
+        
+        [Data_5Actions]
+        ActionsCount=1
+        
+        [Data_5Actions0]
+        CommandURL=sh /home/milad/scripts/shortcut.sh
+        Type=COMMAND_URL
+        
+        [Data_5Conditions]
+        Comment=
+        ConditionsCount=0
+        
+        [Data_5Triggers]
+        Comment=Simple_action
+        TriggersCount=1
+        
+        [Data_5Triggers0]
+        Key=F9
+        Type=SHORTCUT
+        Uuid={5971d014-f454-481a-9a29-22f43dc0cb16}
+
+
+  - name: setup shortcut count to 5
+    ini_file:
+      path: ~/.config/khotkeysrc
+      section: Data
+      option: DataCount
+      value: "5"
+
+  - name: reset shortcut service
+    command: qdbus org.kde.keyboard /modules/khotkeys org.kde.khotkeys.reread_configuration 
