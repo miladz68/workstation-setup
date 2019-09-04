@@ -1,0 +1,63 @@
+- hosts: localhost
+  become: false
+  tasks:
+  - name: Neovim Config
+    git: 
+        repo: https://github.com/miladz68/vim-config.git 
+        dest: $HOME/.config/nvim
+        update: no
+  - name: Install Plugins 
+    command: nvim +PlugInstall +qall
+
+  - name: Replace neovim editor 
+    lineinfile:
+        path: /home/milad/.profile
+        regexp: 'export EDITOR=/usr/bin/nano'
+        line: export EDITOR=/usr/bin/nvim
+
+  - name: Alias vim to nvim
+    lineinfile:
+        path: /home/milad/.profile
+        line: alias vim=nvim
+
+  - name: Clone oh-my-zsh
+    git: 
+        repo: https://github.com/robbyrussell/oh-my-zsh.git
+        dest: ~/.oh-my-zsh
+        update: no
+
+  - name: create oh-my-zsh template
+    command: cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+
+  - name: copy powerlevel.rc 
+    command: cp ./powerlevel1.rc ~/.powerlevel.rc
+
+  - name: source .profile in zshrc
+    lineinfile:
+        path: ~/.zshrc
+        line: source ~/.profile
+        
+  - name: source .powerlevel in zshrc
+    lineinfile:
+        path: ~/.zshrc
+        line: source ~/.powerlevel.rc
+
+  - name: Clone powerlevel10k
+    git: 
+        repo: https://github.com/romkatv/powerlevel10k.git 
+        dest: ~/.oh-my-zsh/themes/powerlevel10k
+        update: no
+
+  - name: set zsh theme to powerlevel10k 
+    lineinfile:
+        path: ~/.zshrc
+        regex: 'ZSH_THEME=.*'
+        line: ZSH_THEME=powerlevel10k/powerlevel10k
+
+  - name: Change tilda font to GoMono 
+    lineinfile:
+        path: ~/.config/tilda/config_0
+        regex: 'font=.*'
+        line: font="GoMono Nerd Font 14"
+
+

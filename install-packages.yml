@@ -1,0 +1,30 @@
+- hosts: localhost
+  become: true
+  tasks:
+  - name: Install Neovim 
+    pacman: 
+        name: neovim
+  - name: Install zsh
+    pacman: 
+        name: zsh
+  - name: Install unzip
+    pacman: 
+        name: unzip
+  - name: Install xclip
+    pacman: 
+        name: xclip
+
+  - name: Install oh-my-zsh
+    command: sh -c sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended 
+  - name: change shell to zsh
+    user: 
+        name: milad
+        shell: /usr/bin/zsh 
+  - name: download and install InconsolataGo nerdfont 
+    get_url:
+      url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/InconsolataGo/Regular/complete/InconsolataGo%20Nerd%20Font%20Complete%20Mono.ttf 
+      dest: /usr/local/share/fonts/i/
+  - name: download and install GoMono nerdfont 
+    get_url:
+      url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/Go-Mono/Regular/complete/Go%20Mono%20Nerd%20Font%20Complete.ttf
+      dest: /usr/local/share/fonts/i/
