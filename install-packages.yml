@@ -13,6 +13,9 @@
   - name: Install xclip
     pacman: 
         name: xclip
+  - name: Install python2 pip
+    pacman: 
+        name: python2-pip
 
   - name: Install oh-my-zsh
     command: sh -c sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended 
