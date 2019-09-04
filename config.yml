@@ -77,4 +77,13 @@
         value: mza1989@gmail.com
         scope: global
 
-
+  - name: Install AUR ansible module
+    git:
+      repo: https://github.com/kewlfft/ansible-aur.git 
+      dest: ~/.ansible/plugins/modules/aur
+  # Install package_name using the first known helper found
+  - name: Install packages from aur 
+    aur: 
+      name:
+        - visual-studio-code-bin
+        - vazir-fonts
