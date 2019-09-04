@@ -59,5 +59,15 @@
         path: ~/.config/tilda/config_0
         regex: 'font=.*'
         line: font="GoMono Nerd Font 14"
+  - name: set git user name
+    git_config:
+        name: user.name
+        value: milad
+        scope: global
+  - name: set git email
+    git_config:
+        name: user.email
+        value: mza1989@gmail.com
+        scope: global
 
 
