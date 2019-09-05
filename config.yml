@@ -95,6 +95,7 @@
       name:
         - visual-studio-code-bin
         - vazir-fonts
+        - postman-bin
 
   - name: setup yakuake
     lineinfile:

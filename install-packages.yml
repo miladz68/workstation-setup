@@ -1,24 +1,14 @@
 - hosts: localhost
   become: true
   tasks:
-  - name: Install Neovim 
+  - name: Install Packages
     pacman: 
-        name: neovim
-  - name: Install zsh
-    pacman: 
-        name: zsh
-  - name: Install unzip
-    pacman: 
-        name: unzip
-  - name: Install xclip
-    pacman: 
-        name: xclip
-  - name: Install python2 pip
-    pacman: 
-        name: python2-pip
-  - name: Install yay
-    pacman: 
-        name: yay
+        name: [neovim, zsh, unzip, xclip, python2-pip, yay, chromium]
+
+  - name: Alias vim to nvim
+    lineinfile:
+        path: ~/.bashrc
+        line: alias vim=nvim
 
   - name: Install oh-my-zsh
     command: sh -c sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended 
