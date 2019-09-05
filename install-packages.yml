@@ -5,10 +5,21 @@
     pacman: 
         name: [neovim, zsh, unzip, xclip, python2-pip, yay, chromium]
 
-  - name: Alias vim to nvim
+  - name: Alias vim to nvim for root user
     lineinfile:
         path: ~/.bashrc
         line: alias vim=nvim
+
+  - name: create AUR builder user
+    user:
+      name: aur_builder
+      group: wheel
+  - name: add aur_builder to sudoers 
+    lineinfile:
+      path: /etc/sudoers.d/11-install-aur_builder
+      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+      create: yes
+      validate: 'visudo -cf %s'
 
   - name: Install oh-my-zsh
     command: sh -c sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended 
@@ -41,6 +52,8 @@
       - nameserver 185.51.200.2
       - nameserver 178.22.122.100
 
+- name: Install Aur packages
+  import_playbook: aur.yml
 - name: Install/Update Golang
   import_playbook: update-go.yml
         
