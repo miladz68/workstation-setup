@@ -50,6 +50,7 @@
     with_items:
       - nameserver 185.51.200.2
       - nameserver 178.22.122.100
+
+- name: Install/Update Golang
+  import_playbook: update-go.yml
         
-
-

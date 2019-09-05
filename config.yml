@@ -19,13 +19,20 @@
   - name: Replace neovim editor 
     lineinfile:
         path: /home/milad/.profile
-        regexp: 'export EDITOR=/usr/bin/nano'
+        regexp: 'export EDITOR=.*'
         line: export EDITOR=/usr/bin/nvim
 
   - name: Alias vim to nvim
     lineinfile:
         path: /home/milad/.profile
         line: alias vim=nvim
+
+  - name: modify PATH in .profile
+    lineinfile:
+        path: /home/milad/.profile
+        line: "PATH=$PATH:{{item}}"
+    with_items:
+        - /usr/local/go/bin
 
   - name: Clone oh-my-zsh
     git: 
