@@ -34,3 +34,22 @@
     get_url:
       url: https://raw.githubusercontent.com/ryanoasis/nerd-fonts/master/patched-fonts/Go-Mono/Regular/complete/Go%20Mono%20Nerd%20Font%20Complete.ttf
       dest: /usr/local/share/fonts/i/
+
+  - name: stop newtork manger from overwriting dns servers
+    copy:
+      content: |
+             [main]
+             dns=none
+      dest: /etc/NetworkManager/conf.d/99-dont-touch-my-dns.conf
+
+  - name: setup shecan dns address
+    lineinfile:
+      dest: /etc/resolv.conf
+      insertafter: '^#'
+      line: "{{item}}"
+    with_items:
+      - nameserver 185.51.200.2
+      - nameserver 178.22.122.100
+        
+
+
