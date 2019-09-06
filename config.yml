@@ -33,6 +33,7 @@
         line: "PATH=$PATH:{{item}}"
     with_items:
         - /usr/local/go/bin
+        - ~/.local/bin
 
   - name: Clone oh-my-zsh
     git: 
