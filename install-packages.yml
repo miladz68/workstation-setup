@@ -14,6 +14,7 @@
     user:
       name: aur_builder
       group: wheel
+      system: yes
   - name: add aur_builder to sudoers 
     lineinfile:
       path: /etc/sudoers.d/11-install-aur_builder
