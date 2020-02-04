@@ -1,18 +1,15 @@
+---
 - hosts: localhost
   become: yes
   become_user: aur_builder
   tasks:
-
-  - name: Install AUR ansible module
-    git:
-      repo: https://github.com/kewlfft/ansible-aur.git 
-      dest: ~/.ansible/plugins/modules/aur
-  # Install package_name using the first known helper found
-  - name: Install packages from aur 
-    aur: 
-      skip_installed: yes
-      name:
-        - visual-studio-code-bin
-        - vazir-fonts
-        - postman-bin
-        - behdad-fonts
+    # Install package_name using the first known helper found
+    - name: Install packages from aur
+      aur:
+        skip_installed: yes
+        name:
+          - visual-studio-code-bin
+          - vazir-fonts
+          - postman-bin
+          - behdad-fonts
+          - emacs

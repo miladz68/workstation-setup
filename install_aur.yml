@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  become: yes
+  become_user: milad
+  tasks:
+    - name: Install AUR ansible module
+      git:
+        repo: https://github.com/kewlfft/ansible-aur.git
+        dest: ~/.ansible/plugins/modules/aur
